@@ -4,6 +4,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const signupForm = document.getElementById("signup-form");
   const messageDiv = document.getElementById("message");
 
+  // Function to sanitize HTML to prevent XSS
+  function sanitizeHTML(str) {
+    const tempDiv = document.createElement("div");
+    tempDiv.textContent = str;
+    return tempDiv.innerHTML;
+  }
+
   // Function to fetch activities from API
   async function fetchActivities() {
     try {
@@ -30,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ${details.participants
                   .map(
                     (participant) =>
-                      `<li class="participant-item">${participant}</li>`
+                      `<li class="participant-item">${sanitizeHTML(participant)}</li>`
                   )
                   .join("")}
               </ul>
